@@ -2,17 +2,20 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { hotels } from "@/data/hotels";
-import { ArrowLeft, Star, MapPin, Menu, X, Waves, Sparkles, UtensilsCrossed, TreePalm, Dumbbell, Wine, Car, Phone, Wifi, ArrowRight } from "lucide-react";
+import { ArrowLeft, Star, MapPin, Menu, X, Waves, Sparkles, UtensilsCrossed, TreePalm, Dumbbell, Wine, Car, Phone, Wifi, ArrowRight, Mail, Instagram } from "lucide-react";
 
 const amenityIcons: Record<string, React.ReactNode> = {
   "Infinity Pool": <Waves className="w-5 h-5" />,
   "Cliffside Pool": <Waves className="w-5 h-5" />,
+  "Natural Pool": <Waves className="w-5 h-5" />,
   "Spa & Wellness": <Sparkles className="w-5 h-5" />,
   "Mediterranean Spa": <Sparkles className="w-5 h-5" />,
   "Luxury Spa": <Sparkles className="w-5 h-5" />,
+  "Jungle Spa": <Sparkles className="w-5 h-5" />,
   "Fine Dining": <UtensilsCrossed className="w-5 h-5" />,
   "Gourmet Restaurant": <UtensilsCrossed className="w-5 h-5" />,
   "Michelin Restaurant": <UtensilsCrossed className="w-5 h-5" />,
+  "Farm-to-Table Restaurant": <UtensilsCrossed className="w-5 h-5" />,
   "Private Beach": <TreePalm className="w-5 h-5" />,
   "Fitness Center": <Dumbbell className="w-5 h-5" />,
   "Wine Cellar": <Wine className="w-5 h-5" />,
@@ -44,13 +47,13 @@ const HotelPage = () => {
         <div className="flex items-center justify-between px-5 md:px-16 py-4">
           <button
             onClick={() => navigate("/")}
-            className="flex items-center gap-2 text-foreground/50 hover:text-gold transition-colors duration-300 font-body text-[10px] tracking-[0.2em] uppercase"
+            className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300 font-body text-[10px] tracking-[0.2em] uppercase"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Back</span>
           </button>
           <h2
-            className="text-lg md:text-xl font-display font-semibold tracking-[0.15em] text-foreground cursor-pointer"
+            className="text-lg md:text-xl font-display font-semibold tracking-[0.12em] cursor-pointer"
             onClick={() => navigate("/")}
           >
             <span className="text-gold-gradient">EVARA</span>{" "}
@@ -63,7 +66,7 @@ const HotelPage = () => {
                 key={h.id}
                 onClick={() => navigate(`/hotel/${h.id}`)}
                 className={`text-[10px] tracking-[0.2em] uppercase font-body transition-colors duration-300 ${
-                  h.id === id ? "text-gold" : "text-foreground/40 hover:text-foreground/70"
+                  h.id === id ? "text-primary" : "text-foreground/40 hover:text-foreground/70"
                 }`}
               >
                 {h.name}
@@ -83,15 +86,15 @@ const HotelPage = () => {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden border-t border-gold/10 bg-background/95 backdrop-blur-xl"
+              className="md:hidden overflow-hidden border-t border-border bg-background/98 backdrop-blur-xl"
             >
               <div className="flex flex-col px-6 py-4 gap-1">
                 {hotels.map((h) => (
                   <button
                     key={h.id}
                     onClick={() => { navigate(`/hotel/${h.id}`); setMenuOpen(false); }}
-                    className={`text-left text-sm tracking-[0.15em] uppercase font-body py-3 border-b border-border/20 ${
-                      h.id === id ? "text-gold" : "text-foreground/60"
+                    className={`text-left text-sm tracking-[0.12em] uppercase font-body py-3 border-b border-border/50 ${
+                      h.id === id ? "text-primary" : "text-foreground/60"
                     }`}
                   >
                     {h.name}
@@ -104,37 +107,36 @@ const HotelPage = () => {
       </nav>
 
       {/* Hero */}
-      <section className="relative h-screen overflow-hidden">
+      <section className="relative h-[70vh] md:h-screen overflow-hidden bg-secondary">
         <motion.img
-          initial={{ scale: 1.15 }}
+          initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
           transition={{ duration: 2 }}
           src={hotel.heroImage}
           alt={hotel.name}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/20 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-16 lg:p-24">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
+            transition={{ duration: 1, delay: 0.3 }}
           >
             <div className="flex items-center gap-1 mb-3">
               {Array.from({ length: hotel.rating }).map((_, i) => (
-                <Star key={i} className="w-3 h-3 fill-gold text-gold" />
+                <Star key={i} className="w-3 h-3 fill-primary text-primary" />
               ))}
             </div>
-            <p className="text-foreground/40 text-[10px] tracking-[0.5em] uppercase font-body mb-3">
+            <p className="text-muted-foreground text-[10px] tracking-[0.4em] uppercase font-body mb-2">
               {hotel.tagline}
             </p>
-            <h1 className="text-5xl md:text-7xl lg:text-9xl font-display font-semibold tracking-wider">
-              <span className="text-gold-gradient">{hotel.name}</span>
+            <h1 className="text-4xl md:text-6xl lg:text-8xl font-display font-semibold tracking-wider text-foreground">
+              {hotel.name}
             </h1>
-            <div className="flex items-center gap-2 mt-4 text-foreground/35">
-              <MapPin className="w-3.5 h-3.5 text-gold/50" />
-              <span className="text-[10px] md:text-xs font-body tracking-[0.15em] uppercase">
+            <div className="flex items-center gap-2 mt-4 text-muted-foreground">
+              <MapPin className="w-3.5 h-3.5 text-primary/60" />
+              <span className="text-[10px] md:text-xs font-body tracking-[0.12em] uppercase">
                 {hotel.address}, {hotel.city}
               </span>
             </div>
@@ -150,18 +152,18 @@ const HotelPage = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <p className="text-[10px] tracking-[0.5em] uppercase text-gold/60 font-body mb-4">Welcome to</p>
+          <p className="text-[10px] tracking-[0.5em] uppercase text-primary/60 font-body mb-4">Welcome to</p>
           <h2 className="text-3xl md:text-5xl font-display font-semibold text-foreground tracking-wide mb-5">
             {hotel.name}
           </h2>
           <div className="gold-divider mb-7" />
-          <p className="text-sm md:text-base text-foreground/40 font-body leading-[1.8] max-w-2xl mx-auto">
+          <p className="text-sm md:text-base text-muted-foreground font-body leading-[1.8] max-w-2xl mx-auto">
             {hotel.description}
           </p>
         </motion.div>
       </section>
 
-      {/* Highlights — Restaurant, Banquets, Rooftop, Deluxe Rooms */}
+      {/* Highlights */}
       <section className="pb-4">
         {hotel.highlights.map((highlight, i) => (
           <div
@@ -169,7 +171,7 @@ const HotelPage = () => {
             className={`flex flex-col ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} items-stretch`}
           >
             <motion.div
-              initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
+              initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
@@ -178,29 +180,28 @@ const HotelPage = () => {
               <img
                 src={highlight.image}
                 alt={highlight.title}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-background/20 group-hover:bg-background/10 transition-colors duration-700" />
             </motion.div>
             <motion.div
-              initial={{ opacity: 0, x: i % 2 === 0 ? 50 : -50 }}
+              initial={{ opacity: 0, x: i % 2 === 0 ? 40 : -40 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.15 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
               viewport={{ once: true }}
               className={`w-full md:w-1/2 flex flex-col justify-center p-8 md:p-14 lg:p-20 ${
                 i % 2 === 0 ? "bg-secondary" : "bg-background"
               }`}
             >
-              <p className="text-[10px] tracking-[0.4em] uppercase text-gold/50 font-body mb-4">Experience</p>
+              <p className="text-[10px] tracking-[0.4em] uppercase text-primary/50 font-body mb-4">Experience</p>
               <h3 className="text-2xl md:text-3xl lg:text-4xl font-display font-semibold text-foreground tracking-wide mb-4">
                 {highlight.title}
               </h3>
               <div className="gold-divider-left mb-6" />
-              <p className="text-sm text-foreground/40 font-body leading-[1.8]">
+              <p className="text-sm text-muted-foreground font-body leading-[1.8]">
                 {highlight.description}
               </p>
-              <button className="mt-8 self-start group/btn inline-flex items-center gap-3 border border-gold/20 text-gold/70 px-6 py-2.5 text-[10px] tracking-[0.2em] uppercase font-body hover:bg-gold/10 hover:border-gold/40 hover:text-gold transition-all duration-500">
+              <button className="mt-8 self-start group/btn inline-flex items-center gap-3 border border-primary/20 text-primary px-6 py-2.5 text-[10px] tracking-[0.2em] uppercase font-body hover:bg-primary/5 hover:border-primary/40 transition-all duration-500">
                 Learn More
                 <ArrowRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
               </button>
@@ -211,14 +212,8 @@ const HotelPage = () => {
 
       {/* Gallery */}
       <section className="px-4 md:px-12 lg:px-20 py-16 md:py-24">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="max-w-7xl mx-auto"
-        >
-          <p className="text-center text-[10px] tracking-[0.5em] uppercase text-gold/50 font-body mb-4">Gallery</p>
+        <div className="max-w-7xl mx-auto">
+          <p className="text-center text-[10px] tracking-[0.5em] uppercase text-primary/50 font-body mb-4">Gallery</p>
           <h3 className="text-center text-3xl md:text-4xl font-display font-semibold text-foreground mb-3">
             Moments & Emotions
           </h3>
@@ -236,20 +231,17 @@ const HotelPage = () => {
                 <img
                   src={img}
                   alt={`${hotel.name} gallery ${i + 1}`}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-background/10 group-hover:bg-background/0 transition-colors duration-500" />
-                <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/15 transition-all duration-500" />
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Rooms & Pricing */}
       <section className="section-padding bg-secondary relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20" style={{ background: "radial-gradient(ellipse at top right, hsl(38 70% 52% / 0.06), transparent 60%)" }} />
         <div className="max-w-7xl mx-auto relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -258,7 +250,7 @@ const HotelPage = () => {
             viewport={{ once: true }}
             className="text-center mb-14"
           >
-            <p className="text-[10px] tracking-[0.5em] uppercase text-gold/50 font-body mb-4">Accommodations</p>
+            <p className="text-[10px] tracking-[0.5em] uppercase text-primary/50 font-body mb-4">Accommodations</p>
             <h2 className="text-3xl md:text-5xl font-display font-semibold text-foreground tracking-wide">
               Rooms & Suites
             </h2>
@@ -273,32 +265,32 @@ const HotelPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: i * 0.15 }}
                 viewport={{ once: true }}
-                className="glass-card overflow-hidden group hover-gold-border"
+                className="bg-background border border-border overflow-hidden group hover-gold-border luxury-shadow"
               >
                 <div className="aspect-[4/3] overflow-hidden relative">
                   <img
                     src={room.image}
                     alt={room.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
-                  <span className="absolute top-4 right-4 glass-card text-gold font-display font-bold text-lg px-4 py-1.5 rounded-sm">
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 via-transparent to-transparent" />
+                  <span className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm text-primary font-display font-bold text-lg px-4 py-1.5">
                     {room.price}
-                    <span className="text-[9px] text-foreground/40 font-body block text-center leading-tight">/night</span>
+                    <span className="text-[9px] text-muted-foreground font-body block text-center leading-tight">/night</span>
                   </span>
                 </div>
                 <div className="p-5 md:p-7">
                   <h3 className="text-xl font-display font-semibold text-foreground tracking-wide">{room.name}</h3>
-                  <p className="text-xs text-foreground/35 font-body mt-2 mb-4 leading-relaxed">{room.description}</p>
+                  <p className="text-xs text-muted-foreground font-body mt-2 mb-4 leading-relaxed">{room.description}</p>
                   <div className="flex flex-wrap gap-1.5 mb-5">
                     {room.features.map((f) => (
-                      <span key={f} className="text-[9px] px-2.5 py-1 border border-gold/10 text-foreground/40 font-body tracking-wider uppercase">
+                      <span key={f} className="text-[9px] px-2.5 py-1 border border-border text-muted-foreground font-body tracking-wider uppercase">
                         {f}
                       </span>
                     ))}
                   </div>
-                  <button className="w-full border border-gold/20 text-gold/70 py-3 text-[10px] tracking-[0.2em] uppercase font-body hover:bg-gold/10 hover:border-gold/40 hover:text-gold transition-all duration-500">
+                  <button className="w-full border border-primary/20 text-primary py-3 text-[10px] tracking-[0.2em] uppercase font-body hover:bg-primary/5 hover:border-primary/40 transition-all duration-500">
                     Book Now
                   </button>
                 </div>
@@ -318,7 +310,7 @@ const HotelPage = () => {
             viewport={{ once: true }}
             className="text-center mb-14"
           >
-            <p className="text-[10px] tracking-[0.5em] uppercase text-gold/50 font-body mb-4">Experience</p>
+            <p className="text-[10px] tracking-[0.5em] uppercase text-primary/50 font-body mb-4">Experience</p>
             <h2 className="text-3xl md:text-5xl font-display font-semibold text-foreground tracking-wide">
               Amenities
             </h2>
@@ -333,12 +325,12 @@ const HotelPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
                 viewport={{ once: true }}
-                className="flex flex-col items-center text-center gap-3 py-6 px-3 border border-border/30 hover:border-gold/30 hover:bg-secondary/50 transition-all duration-500 group"
+                className="flex flex-col items-center text-center gap-3 py-6 px-3 border border-border hover:border-primary/30 hover:bg-secondary/50 transition-all duration-500 group"
               >
-                <div className="text-gold/50 group-hover:text-gold transition-colors duration-300">
+                <div className="text-primary/50 group-hover:text-primary transition-colors duration-300">
                   {amenityIcons[amenity] || <Wifi className="w-5 h-5" />}
                 </div>
-                <span className="text-[10px] font-body text-foreground/50 tracking-[0.15em] uppercase group-hover:text-foreground/70 transition-colors duration-300">{amenity}</span>
+                <span className="text-[10px] font-body text-muted-foreground tracking-[0.12em] uppercase group-hover:text-foreground/70 transition-colors duration-300">{amenity}</span>
               </motion.div>
             ))}
           </div>
@@ -346,9 +338,7 @@ const HotelPage = () => {
       </section>
 
       {/* CTA */}
-      <section className="section-padding relative overflow-hidden">
-        <div className="absolute inset-0 bg-secondary" />
-        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center bottom, hsl(38 70% 52% / 0.08), transparent 60%)" }} />
+      <section className="section-padding relative overflow-hidden bg-secondary">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -356,14 +346,14 @@ const HotelPage = () => {
           viewport={{ once: true }}
           className="relative text-center"
         >
-          <p className="text-[10px] tracking-[0.5em] uppercase text-gold/50 font-body mb-4">Ready to Experience</p>
+          <p className="text-[10px] tracking-[0.5em] uppercase text-primary/50 font-body mb-4">Ready to Experience</p>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-semibold text-foreground mb-5 tracking-wide">
-            <span className="text-gold-gradient">{hotel.name}</span>?
+            {hotel.name}
           </h2>
-          <p className="text-foreground/30 font-body mb-10 max-w-md mx-auto text-sm leading-relaxed">
+          <p className="text-muted-foreground font-body mb-10 max-w-md mx-auto text-sm leading-relaxed">
             Reserve your stay and discover a world of unparalleled luxury and personalized service.
           </p>
-          <button className="group inline-flex items-center gap-3 border border-gold/30 text-gold px-10 py-4 text-[10px] tracking-[0.3em] uppercase font-body hover:bg-gold/10 hover:border-gold/60 transition-all duration-500">
+          <button className="group inline-flex items-center gap-3 border border-primary/30 text-primary px-10 py-4 text-[10px] tracking-[0.3em] uppercase font-body hover:bg-primary/5 hover:border-primary/60 transition-all duration-500">
             Reserve Your Stay
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </button>
@@ -371,18 +361,40 @@ const HotelPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border/20 px-6 md:px-16 py-8 bg-background">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-3 max-w-7xl mx-auto">
-          <p className="text-[9px] tracking-[0.2em] uppercase text-foreground/20 font-body">
-            © 2026 Evara Co. All rights reserved.
-          </p>
-          <p className="text-sm font-display tracking-[0.15em]">
-            <span className="text-gold-gradient">EVARA</span>{" "}
-            <span className="text-foreground/30">Co.</span>
-          </p>
-          <p className="text-[9px] tracking-[0.15em] text-foreground/20 font-body uppercase">
-            {hotel.address}, {hotel.city}
-          </p>
+      <footer className="border-t border-border px-5 md:px-16 py-10 bg-background">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="text-center md:text-left">
+              <p className="text-lg font-display font-semibold tracking-[0.15em]">
+                <span className="text-gold-gradient">EVARA</span>{" "}
+                <span className="text-foreground/40 font-light">Co.</span>
+              </p>
+              <p className="text-[10px] text-muted-foreground font-body mt-1 tracking-[0.1em]">
+                {hotel.address}, {hotel.city}
+              </p>
+            </div>
+            <div className="flex items-center gap-8">
+              {hotels.map((h) => (
+                <button
+                  key={h.id}
+                  onClick={() => navigate(`/hotel/${h.id}`)}
+                  className="text-[10px] tracking-[0.15em] uppercase font-body text-muted-foreground hover:text-primary transition-colors duration-300"
+                >
+                  {h.name}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-5">
+              <a href="tel:+1234567890" className="text-muted-foreground hover:text-primary transition-colors"><Phone className="w-4 h-4" strokeWidth={1.5} /></a>
+              <a href="mailto:info@evaraco.com" className="text-muted-foreground hover:text-primary transition-colors"><Mail className="w-4 h-4" strokeWidth={1.5} /></a>
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Instagram className="w-4 h-4" strokeWidth={1.5} /></a>
+            </div>
+          </div>
+          <div className="mt-8 pt-6 border-t border-border/50 text-center">
+            <p className="text-[9px] tracking-[0.2em] uppercase text-muted-foreground/60 font-body">
+              © 2026 Evara Co. All rights reserved.
+            </p>
+          </div>
         </div>
       </footer>
     </div>

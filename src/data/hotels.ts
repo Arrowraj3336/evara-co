@@ -1,6 +1,6 @@
-import hotelEvara from "@/assets/hotel-evara.jpg";
-import hotelDalan from "@/assets/hotel-dalan.jpg";
-import hotelSophia from "@/assets/hotel-sophia.jpg";
+import hotelEvara from "@/assets/hotel-evara.png";
+import hotelDallan from "@/assets/hotel-dallan.png";
+import hotelExotica from "@/assets/hotel-exotica.png";
 import roomDeluxe from "@/assets/room-deluxe.jpg";
 import roomSuite from "@/assets/room-suite.jpg";
 import hotelSpa from "@/assets/hotel-spa.jpg";
@@ -43,12 +43,12 @@ export interface HotelData {
 export const hotels: HotelData[] = [
   {
     id: "evara",
-    name: "Evara",
+    name: "Hotel Evara",
     tagline: "Where Luxury Meets Serenity",
     address: "42 Palm Avenue, Tropical Bay",
     city: "Maldives",
     description:
-      "Nestled amidst lush tropical gardens, Evara is a sanctuary of modern elegance. With its striking architecture and world-class amenities, every moment here is designed to captivate your senses and rejuvenate your spirit.",
+      "Nestled amidst lush tropical gardens, Hotel Evara is a sanctuary of modern elegance. With its striking architecture and world-class amenities, every moment here is designed to captivate your senses and rejuvenate your spirit.",
     heroImage: hotelEvara,
     cardImage: hotelEvara,
     rating: 5,
@@ -101,15 +101,15 @@ export const hotels: HotelData[] = [
     ],
   },
   {
-    id: "dalan-resort",
-    name: "Dalan Resort",
-    tagline: "Mediterranean Elegance Redefined",
+    id: "dallan-resort",
+    name: "The Dallan Resort",
+    tagline: "Elegance Redefined",
     address: "Coastal Road 7, Amalfi Coast",
     city: "Italy",
     description:
-      "Perched above the sparkling Mediterranean, Dalan Resort offers an unparalleled blend of coastal charm and refined luxury. Whitewashed walls, azure waters, and world-renowned cuisine await your arrival.",
-    heroImage: hotelDalan,
-    cardImage: hotelDalan,
+      "Perched above the sparkling Mediterranean, The Dallan Resort offers an unparalleled blend of coastal charm and refined luxury. Whitewashed walls, azure waters, and world-renowned cuisine await your arrival.",
+    heroImage: hotelDallan,
+    cardImage: hotelDallan,
     rating: 5,
     rooms: [
       {
@@ -135,7 +135,7 @@ export const hotels: HotelData[] = [
       },
     ],
     amenities: ["Cliffside Pool", "Mediterranean Spa", "Gourmet Restaurant", "Wine Cellar", "Yacht Charter", "Tennis Court", "Art Gallery", "Helicopter Pad"],
-    gallery: [hotelDalan, roomSuite, hotelDining, hotelSpa, hotelRooftop, hotelRestaurant],
+    gallery: [hotelDallan, roomSuite, hotelDining, hotelSpa, hotelRooftop, hotelRestaurant],
     highlights: [
       {
         title: "La Terrazza Restaurant",
@@ -160,23 +160,23 @@ export const hotels: HotelData[] = [
     ],
   },
   {
-    id: "sophia",
-    name: "Sophia",
-    tagline: "Urban Luxury, Timeless Grace",
-    address: "1 Grand Boulevard, City Center",
-    city: "Paris",
+    id: "evara-exotica",
+    name: "Evara Exotica",
+    tagline: "A Retreat Beyond Imagination",
+    address: "Forest Lane 12, Nature Reserve",
+    city: "Bali",
     description:
-      "In the heart of the city, Sophia stands as a beacon of sophistication. Art deco grandeur meets contemporary comfort in this iconic establishment, where every detail tells a story of refined taste.",
-    heroImage: hotelSophia,
-    cardImage: hotelSophia,
+      "Hidden within ancient forests and lush landscapes, Evara Exotica is an escape into nature's finest luxury. A unique architectural masterpiece surrounded by tranquil greenery, offering an experience unlike any other.",
+    heroImage: hotelExotica,
+    cardImage: hotelExotica,
     rating: 5,
     rooms: [
       {
-        name: "Classic Elegance Room",
-        description: "Beautifully appointed room with city views and luxurious marble bathroom.",
+        name: "Forest View Room",
+        description: "Beautifully appointed room with panoramic forest views and luxury amenities.",
         price: "$380",
         image: roomDeluxePremium,
-        features: ["City View", "Queen Bed", "Marble Bath", "Nespresso"],
+        features: ["Forest View", "Queen Bed", "Marble Bath", "Nespresso"],
       },
       {
         name: "Grand Suite",
@@ -186,34 +186,34 @@ export const hotels: HotelData[] = [
         features: ["Panoramic View", "Dining Area", "Study", "Walk-in Closet"],
       },
       {
-        name: "Penthouse Royale",
-        description: "The ultimate urban retreat — our rooftop penthouse with 360° city views.",
-        price: "$3,200",
+        name: "Canopy Villa",
+        description: "The ultimate nature retreat — our treetop villa with 360° forest views.",
+        price: "$2,200",
         image: roomDeluxe,
         features: ["360° Views", "Private Terrace", "Jacuzzi", "24/7 Butler"],
       },
     ],
-    amenities: ["Rooftop Bar", "Luxury Spa", "Michelin Restaurant", "Cigar Lounge", "Valet Parking", "Ballroom", "Business Center", "Limousine Service"],
-    gallery: [hotelSophia, roomDeluxePremium, roomSuite, hotelDining, hotelBanquet, hotelRooftop],
+    amenities: ["Natural Pool", "Jungle Spa", "Farm-to-Table Restaurant", "Meditation Garden", "Nature Walks", "Yoga Pavilion", "Library", "Helipad"],
+    gallery: [hotelExotica, roomDeluxePremium, roomSuite, hotelDining, hotelBanquet, hotelRooftop],
     highlights: [
       {
-        title: "Le Sophia Restaurant",
-        description: "Two Michelin stars illuminate our signature restaurant. Chef Laurent crafts French haute cuisine that honours tradition while embracing modern culinary artistry.",
+        title: "The Canopy Restaurant",
+        description: "Dine among the treetops. Our signature restaurant serves organic, farm-to-table cuisine crafted by world-renowned chefs in a breathtaking open-air setting.",
         image: hotelRestaurant,
       },
       {
-        title: "Grand Salon Banquet",
-        description: "The jewel of Parisian event venues. Our art deco Grand Salon hosts up to 400 guests beneath a restored 19th-century painted ceiling and Baccarat chandeliers.",
+        title: "The Grand Pavilion",
+        description: "An extraordinary venue nestled in nature. Our pavilion hosts intimate gatherings and grand celebrations alike, surrounded by the sounds of the forest.",
         image: hotelBanquet,
       },
       {
-        title: "Ciel de Paris Rooftop",
-        description: "Paris at your feet. Our rooftop terrace offers 360° views of the Eiffel Tower, Sacré-Cœur, and the city lights, complemented by champagne and live jazz.",
+        title: "Sunset Deck",
+        description: "Watch golden sunsets from our elevated deck perched above the forest canopy. Enjoy handcrafted cocktails and curated tasting menus under the stars.",
         image: hotelRooftop,
       },
       {
-        title: "Parisian Luxury Rooms",
-        description: "Inspired by Parisian elegance, each room features curated art, Hermès amenities, Egyptian cotton linens, and views of the city's most iconic landmarks.",
+        title: "Luxury Forest Rooms",
+        description: "Each room is a sanctuary inspired by nature, featuring natural materials, panoramic windows, luxury amenities, and views that bring the outside in.",
         image: roomDeluxePremium,
       },
     ],
