@@ -27,7 +27,7 @@ const Index = () => {
               style={{ background: "radial-gradient(circle, hsl(var(--gold) / 0.15), hsl(var(--background)))" }}
               initial={{ width: 0, height: 0, opacity: 0.8, filter: "blur(40px)" }}
               animate={{ width: "300vmax", height: "300vmax", opacity: 0, filter: "blur(0px)" }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               onAnimationComplete={() => setIntroComplete(true)}
             />
             <motion.p
