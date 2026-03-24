@@ -144,11 +144,11 @@ const Index = () => {
             >
               {/* Image */}
               <div className="relative overflow-hidden rounded-sm luxury-shadow">
-                <div className="aspect-[4/5] overflow-hidden">
+                <div className="overflow-hidden">
                   <img
                     src={hotel.cardImage}
                     alt={hotel.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                   />
                 </div>
