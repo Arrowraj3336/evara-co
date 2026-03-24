@@ -34,7 +34,7 @@ const Index = () => {
               className="absolute text-2xl md:text-4xl font-display font-semibold tracking-[0.2em]"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: [0, 1, 1, 0], scale: [0.8, 1, 1, 1.1] }}
-              transition={{ duration: 1.2, times: [0, 0.2, 0.7, 1] }}
+              transition={{ duration: 0.9, times: [0, 0.2, 0.7, 1] }}
             >
               <span className="text-gold-gradient">EVARA</span>
               <span className="text-foreground/40 font-light ml-2">Co.</span>
