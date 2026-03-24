@@ -143,7 +143,7 @@ const Index = () => {
               onClick={() => navigate(`/hotel/${hotel.id}`)}
             >
               {/* Image */}
-              <div className="relative overflow-hidden rounded-sm luxury-shadow">
+              <div className="relative overflow-hidden">
                 <div className="overflow-hidden">
                   <img
                     src={hotel.cardImage}
@@ -152,8 +152,6 @@ const Index = () => {
                     loading="lazy"
                   />
                 </div>
-                {/* Subtle overlay on hover */}
-                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/5 transition-colors duration-500" />
               </div>
 
               {/* Info below image */}
