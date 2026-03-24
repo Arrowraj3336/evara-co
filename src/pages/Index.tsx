@@ -27,14 +27,14 @@ const Index = () => {
               style={{ background: "radial-gradient(circle, hsl(var(--gold) / 0.15), hsl(var(--background)))" }}
               initial={{ width: 0, height: 0, opacity: 0.8, filter: "blur(40px)" }}
               animate={{ width: "300vmax", height: "300vmax", opacity: 0, filter: "blur(0px)" }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               onAnimationComplete={() => setIntroComplete(true)}
             />
             <motion.p
               className="absolute text-2xl md:text-4xl font-display font-semibold tracking-[0.2em]"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: [0, 1, 1, 0], scale: [0.8, 1, 1, 1.1] }}
-              transition={{ duration: 1.2, times: [0, 0.2, 0.7, 1] }}
+              transition={{ duration: 0.9, times: [0, 0.2, 0.7, 1] }}
             >
               <span className="text-gold-gradient">EVARA</span>
               <span className="text-foreground/40 font-light ml-2">Co.</span>
@@ -144,11 +144,11 @@ const Index = () => {
             >
               {/* Image */}
               <div className="relative overflow-hidden rounded-sm luxury-shadow">
-                <div className="aspect-[4/5] overflow-hidden">
+                <div className="overflow-hidden">
                   <img
                     src={hotel.cardImage}
                     alt={hotel.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                   />
                 </div>
