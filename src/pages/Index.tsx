@@ -1,17 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { hotels } from "@/data/hotels";
-import { Phone, Mail, Instagram, Menu, X, MapPin } from "lucide-react";
+import { Phone, Mail, Instagram, Menu, X, ArrowRight } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [introComplete, setIntroComplete] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
+
+  // Preload card images
+  useEffect(() => {
+    hotels.forEach((hotel) => {
+      const img = new Image();
+      img.src = hotel.cardImage;
+      img.onload = () => setImagesLoaded((prev) => ({ ...prev, [hotel.id]: true }));
+    });
+  }, []);
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      {/* Intro Animation — white circle zoom */}
+      {/* Intro Animation */}
       <AnimatePresence>
         {!introComplete && (
           <motion.div
@@ -20,7 +30,6 @@ const Index = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            onAnimationComplete={() => {}}
           >
             <motion.div
               className="rounded-full"
@@ -54,7 +63,6 @@ const Index = () => {
             <span className="text-foreground/40 font-light">Co.</span>
           </h1>
 
-          {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-10">
             {hotels.map((h) => (
               <button
@@ -84,7 +92,6 @@ const Index = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         <AnimatePresence>
           {menuOpen && (
             <motion.div
@@ -115,57 +122,78 @@ const Index = () => {
         </AnimatePresence>
       </nav>
 
-      {/* Main Content — 3 Hotel Cards */}
-      <main className="min-h-screen flex flex-col items-center justify-center pt-20 pb-24 px-5">
+      {/* Hero Section */}
+      <main className="pt-24 pb-24">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={introComplete ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-center mb-12 md:mb-16"
+          className="text-center mb-16 md:mb-20 px-5"
         >
-          <p className="text-[10px] tracking-[0.5em] uppercase text-primary/60 font-body mb-3">Our Collection</p>
+          <p className="text-[10px] tracking-[0.5em] uppercase text-primary/60 font-body mb-3">Our Properties</p>
           <h2 className="text-3xl md:text-5xl font-display font-semibold text-foreground tracking-wide">
             Choose Your Destination
           </h2>
           <div className="gold-divider mt-5" />
         </motion.div>
 
-        {/* Hotel Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl w-full mx-auto">
+        {/* Property Cards — Full-width stacked editorial layout */}
+        <div className="flex flex-col gap-0">
           {hotels.map((hotel, index) => (
             <motion.div
               key={hotel.id}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 60 }}
               animate={introComplete ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.2 + index * 0.15 }}
-              className="group cursor-pointer"
+              className="group cursor-pointer relative"
               onClick={() => navigate(`/hotel/${hotel.id}`)}
             >
-              {/* Image */}
-              <div className="relative overflow-hidden">
-                <div className="overflow-hidden">
-                  <img
-                    src={hotel.cardImage}
-                    alt={hotel.name}
-                    className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                  />
+              <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center`}>
+                {/* Image Side */}
+                <div className="w-full md:w-3/5 relative overflow-hidden bg-secondary/30">
+                  <div className="relative">
+                    {/* Skeleton loader */}
+                    {!imagesLoaded[hotel.id] && (
+                      <div className="w-full aspect-[4/3] bg-muted animate-pulse" />
+                    )}
+                    <img
+                      src={hotel.cardImage}
+                      alt={hotel.name}
+                      className={`w-full h-auto object-contain transition-all duration-700 group-hover:scale-[1.02] ${
+                        imagesLoaded[hotel.id] ? 'opacity-100' : 'opacity-0 absolute inset-0'
+                      }`}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+
+                {/* Content Side */}
+                <div className={`w-full md:w-2/5 flex flex-col justify-center px-8 py-10 md:px-14 lg:px-20 ${
+                  index % 2 === 0 ? 'md:border-l' : 'md:border-r'
+                } border-border/40`}>
+                  <div className="gold-divider-left mb-6" />
+                  <p className="text-[9px] tracking-[0.4em] uppercase text-primary/50 font-body mb-2">
+                    {hotel.tagline}
+                  </p>
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-display font-semibold text-foreground tracking-wider mb-4 group-hover:text-primary transition-colors duration-500">
+                    {hotel.name}
+                  </h3>
+                  <p className="text-xs text-muted-foreground font-body leading-relaxed mb-6 max-w-sm">
+                    {hotel.description.length > 120 ? hotel.description.slice(0, 120) + '...' : hotel.description}
+                  </p>
+                  <div className="flex items-center gap-3 text-primary text-[10px] tracking-[0.2em] uppercase font-body group-hover:gap-4 transition-all duration-500">
+                    <span>Explore</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </div>
                 </div>
               </div>
 
-              {/* Info below image */}
-              <div className="mt-5 text-center">
-                <h3 className="text-xl md:text-2xl font-display font-semibold text-foreground tracking-wider group-hover:text-primary transition-colors duration-300">
-                  {hotel.name}
-                </h3>
-                <div className="flex items-center justify-center gap-1.5 mt-2">
-                  <MapPin className="w-3 h-3 text-primary/60" strokeWidth={1.5} />
-                  <p className="text-[11px] text-muted-foreground font-body tracking-[0.1em]">
-                    {hotel.address}, {hotel.city}
-                  </p>
-                </div>
-              </div>
+              {/* Divider line between cards */}
+              {index < hotels.length - 1 && (
+                <div className="w-full h-px bg-border/50" />
+              )}
             </motion.div>
           ))}
         </div>
@@ -175,7 +203,6 @@ const Index = () => {
       <footer className="border-t border-border px-5 md:px-16 py-10 bg-secondary/50">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            {/* Brand */}
             <div className="text-center md:text-left">
               <p className="text-lg font-display font-semibold tracking-[0.15em]">
                 <span className="text-gold-gradient">EVARA</span>{" "}
@@ -185,8 +212,6 @@ const Index = () => {
                 A Collection of Extraordinary Experiences
               </p>
             </div>
-
-            {/* Links */}
             <div className="flex items-center gap-8">
               {hotels.map((h) => (
                 <button
@@ -198,15 +223,12 @@ const Index = () => {
                 </button>
               ))}
             </div>
-
-            {/* Social */}
             <div className="flex items-center gap-5">
               <a href="tel:+1234567890" className="text-muted-foreground hover:text-primary transition-colors"><Phone className="w-4 h-4" strokeWidth={1.5} /></a>
               <a href="mailto:info@evaraco.com" className="text-muted-foreground hover:text-primary transition-colors"><Mail className="w-4 h-4" strokeWidth={1.5} /></a>
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Instagram className="w-4 h-4" strokeWidth={1.5} /></a>
             </div>
           </div>
-
           <div className="mt-8 pt-6 border-t border-border/50 text-center">
             <p className="text-[9px] tracking-[0.2em] uppercase text-muted-foreground/60 font-body">
               © 2026 Evara Co. All rights reserved.
