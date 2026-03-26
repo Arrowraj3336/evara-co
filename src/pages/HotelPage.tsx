@@ -9,19 +9,27 @@ const amenityIcons: Record<string, React.ReactNode> = {
   "Infinity Pool": <Waves className="w-5 h-5" />,
   "Cliffside Pool": <Waves className="w-5 h-5" />,
   "Natural Pool": <Waves className="w-5 h-5" />,
+  "Swimming Pool": <Waves className="w-5 h-5" />,
   "Spa & Wellness": <Sparkles className="w-5 h-5" />,
   "Mediterranean Spa": <Sparkles className="w-5 h-5" />,
   "Luxury Spa": <Sparkles className="w-5 h-5" />,
   "Jungle Spa": <Sparkles className="w-5 h-5" />,
+  "Spa & Salon": <Scissors className="w-5 h-5" />,
   "Fine Dining": <UtensilsCrossed className="w-5 h-5" />,
   "Gourmet Restaurant": <UtensilsCrossed className="w-5 h-5" />,
   "Michelin Restaurant": <UtensilsCrossed className="w-5 h-5" />,
   "Farm-to-Table Restaurant": <UtensilsCrossed className="w-5 h-5" />,
+  "CHAUKAA Restaurant": <UtensilsCrossed className="w-5 h-5" />,
+  "Multi-Cuisine Restaurant": <UtensilsCrossed className="w-5 h-5" />,
+  "Coffee Shop": <Coffee className="w-5 h-5" />,
   "Private Beach": <TreePalm className="w-5 h-5" />,
   "Fitness Center": <Dumbbell className="w-5 h-5" />,
   "Wine Cellar": <Wine className="w-5 h-5" />,
   "Valet Parking": <Car className="w-5 h-5" />,
+  "Car Parking": <ParkingCircle className="w-5 h-5" />,
   "Concierge": <Phone className="w-5 h-5" />,
+  "Rain Dance Area": <Droplets className="w-5 h-5" />,
+  "Kids Zone": <Gamepad2 className="w-5 h-5" />,
 };
 
 const HotelPage = () => {
@@ -36,6 +44,71 @@ const HotelPage = () => {
         <div className="text-center">
           <h1 className="text-3xl font-display text-foreground">Hotel not found</h1>
           <button onClick={() => navigate("/")} className="mt-4 text-muted-foreground underline font-body">Return home</button>
+        </div>
+      </div>
+    );
+  }
+
+  // Opening Soon page for Evara Exotica
+  const isComingSoon = hotel.id === "evara-exotica";
+
+  if (isComingSoon) {
+    return (
+      <div className="min-h-screen bg-background overflow-x-hidden">
+        {/* Navigation */}
+        <nav className="fixed top-0 left-0 right-0 z-50 glass-nav">
+          <div className="flex items-center justify-between px-5 md:px-16 py-4">
+            <button
+              onClick={() => navigate("/")}
+              className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300 font-body text-[10px] tracking-[0.2em] uppercase"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Back</span>
+            </button>
+            <h2
+              className="text-lg md:text-xl font-display font-semibold tracking-[0.12em] cursor-pointer"
+              onClick={() => navigate("/")}
+            >
+              <span className="text-gold-gradient">EVARA</span>{" "}
+              <span className="text-foreground/40 font-light">Co.</span>
+            </h2>
+            <div className="w-10" />
+          </div>
+        </nav>
+
+        <div className="min-h-screen flex flex-col items-center justify-center px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <img
+              src={constructionImg}
+              alt="Under Construction"
+              width={800}
+              height={800}
+              className="w-64 md:w-80 mx-auto mb-8"
+            />
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-semibold text-foreground tracking-wider mb-4">
+              {hotel.name}
+            </h1>
+            <motion.p
+              className="text-xl md:text-2xl text-primary font-display tracking-[0.15em]"
+              animate={{ opacity: [1, 0.4, 1] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              Opening Soon………..
+            </motion.p>
+            <div className="gold-divider mt-8" />
+            <button
+              onClick={() => navigate("/")}
+              className="mt-10 group inline-flex items-center gap-3 border border-primary/30 text-primary px-8 py-3 text-[10px] tracking-[0.3em] uppercase font-body hover:bg-primary/5 hover:border-primary/60 transition-all duration-500"
+            >
+              Back to Home
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </motion.div>
         </div>
       </div>
     );
