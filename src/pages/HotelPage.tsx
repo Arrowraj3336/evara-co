@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { hotels } from "@/data/hotels";
 import { ArrowLeft, Star, MapPin, Menu, X, Waves, Sparkles, UtensilsCrossed, TreePalm, Dumbbell, Wine, Car, Phone, Wifi, ArrowRight, Mail, Instagram, Coffee, Gamepad2, ParkingCircle, Droplets, Scissors } from "lucide-react";
 import constructionImg from "@/assets/construction-coming-soon.png";
+import ElevatorTransition from "@/components/ElevatorTransition";
+import { useElevatorNavigation } from "@/hooks/useElevatorNavigation";
 
 const amenityIcons: Record<string, React.ReactNode> = {
   "Infinity Pool": <Waves className="w-5 h-5" />,
