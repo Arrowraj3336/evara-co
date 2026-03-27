@@ -40,7 +40,6 @@ const HotelPage = () => {
   const navigate = navigateWithElevator;
   const hotel = hotels.find((h) => h.id === id);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   if (!hotel) {
     return (
