@@ -119,7 +119,8 @@ const HotelPage = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      {/* Navigation */}
+      {/* Elevator Transition */}
+      <ElevatorTransition isActive={isTransitioning} onComplete={handleTransitionComplete} />
       <nav className="fixed top-0 left-0 right-0 z-50 glass-nav">
         <div className="flex items-center justify-between px-5 md:px-16 py-4">
           <button
