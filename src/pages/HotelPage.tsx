@@ -36,8 +36,10 @@ const amenityIcons: Record<string, React.ReactNode> = {
 
 const HotelPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const { isTransitioning, navigateWithElevator, handleTransitionComplete } = useElevatorNavigation();
+  const navigate = navigateWithElevator;
   const hotel = hotels.find((h) => h.id === id);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   if (!hotel) {
