@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { hotels } from "@/data/hotels";
 import { ArrowLeft, Star, MapPin, Menu, X, Waves, Sparkles, UtensilsCrossed, TreePalm, Dumbbell, Wine, Car, Phone, Wifi, ArrowRight, Mail, Instagram, Coffee, Gamepad2, ParkingCircle, Droplets, Scissors } from "lucide-react";
 import constructionImg from "@/assets/construction-coming-soon.png";
+import ElevatorTransition from "@/components/ElevatorTransition";
+import { useElevatorNavigation } from "@/hooks/useElevatorNavigation";
 
 const amenityIcons: Record<string, React.ReactNode> = {
   "Infinity Pool": <Waves className="w-5 h-5" />,
@@ -34,7 +36,8 @@ const amenityIcons: Record<string, React.ReactNode> = {
 
 const HotelPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const { isTransitioning, navigateWithElevator, handleTransitionComplete } = useElevatorNavigation();
+  const navigate = navigateWithElevator;
   const hotel = hotels.find((h) => h.id === id);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -55,7 +58,7 @@ const HotelPage = () => {
   if (isComingSoon) {
     return (
       <div className="min-h-screen bg-background overflow-x-hidden">
-        {/* Navigation */}
+        <ElevatorTransition isActive={isTransitioning} onComplete={handleTransitionComplete} />
         <nav className="fixed top-0 left-0 right-0 z-50 glass-nav">
           <div className="flex items-center justify-between px-5 md:px-16 py-4">
             <button
@@ -116,7 +119,8 @@ const HotelPage = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      {/* Navigation */}
+      {/* Elevator Transition */}
+      <ElevatorTransition isActive={isTransitioning} onComplete={handleTransitionComplete} />
       <nav className="fixed top-0 left-0 right-0 z-50 glass-nav">
         <div className="flex items-center justify-between px-5 md:px-16 py-4">
           <button
