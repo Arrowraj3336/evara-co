@@ -1,12 +1,12 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const useElevatorNavigation = () => {
+export const useZoomNavigation = () => {
   const navigate = useNavigate();
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [pendingPath, setPendingPath] = useState<string | null>(null);
 
-  const navigateWithElevator = useCallback((path: string) => {
+  const navigateWithZoom = useCallback((path: string) => {
     setPendingPath(path);
     setIsTransitioning(true);
   }, []);
@@ -22,7 +22,7 @@ export const useElevatorNavigation = () => {
 
   return {
     isTransitioning,
-    navigateWithElevator,
+    navigateWithZoom,
     handleTransitionComplete,
   };
 };

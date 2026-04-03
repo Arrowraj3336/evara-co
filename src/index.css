@@ -6,55 +6,57 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 220 20% 12%;
+    --background: 40 20% 97%;
+    --foreground: 30 10% 15%;
 
-    --card: 40 20% 97%;
-    --card-foreground: 220 20% 12%;
+    --card: 40 15% 95%;
+    --card-foreground: 30 10% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 12%;
+    --popover: 40 20% 97%;
+    --popover-foreground: 30 10% 15%;
 
-    --primary: 38 70% 45%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 36 45% 42%;
+    --primary-foreground: 40 20% 97%;
 
-    --secondary: 40 15% 95%;
-    --secondary-foreground: 220 20% 12%;
+    --secondary: 38 18% 91%;
+    --secondary-foreground: 30 10% 15%;
 
-    --muted: 40 10% 93%;
-    --muted-foreground: 220 8% 45%;
+    --muted: 36 12% 88%;
+    --muted-foreground: 30 8% 45%;
 
-    --accent: 38 70% 45%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 36 45% 42%;
+    --accent-foreground: 40 20% 97%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 10% 88%;
-    --input: 40 10% 88%;
-    --ring: 38 70% 45%;
+    --border: 36 15% 85%;
+    --input: 36 15% 85%;
+    --ring: 36 45% 42%;
 
     --radius: 0.25rem;
 
-    --gold: 38 70% 45%;
-    --gold-light: 38 50% 60%;
-    --gold-dark: 32 80% 32%;
-    --cream: 40 25% 96%;
+    --gold: 36 45% 42%;
+    --gold-light: 36 40% 55%;
+    --gold-dark: 30 50% 30%;
+    --cream: 40 20% 97%;
     --cream-dark: 36 15% 80%;
-    --charcoal: 220 20% 12%;
-    --charcoal-light: 220 10% 30%;
+    --olive: 40 20% 28%;
+    --olive-light: 38 15% 40%;
+    --charcoal: 30 10% 15%;
+    --charcoal-light: 30 8% 30%;
 
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
 
-    --sidebar-background: 40 15% 95%;
-    --sidebar-foreground: 220 20% 12%;
-    --sidebar-primary: 38 70% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 40 10% 90%;
-    --sidebar-accent-foreground: 220 20% 12%;
-    --sidebar-border: 40 10% 88%;
-    --sidebar-ring: 38 70% 45%;
+    --sidebar-background: 38 18% 91%;
+    --sidebar-foreground: 30 10% 15%;
+    --sidebar-primary: 36 45% 42%;
+    --sidebar-primary-foreground: 40 20% 97%;
+    --sidebar-accent: 36 12% 88%;
+    --sidebar-accent-foreground: 30 10% 15%;
+    --sidebar-border: 36 15% 85%;
+    --sidebar-ring: 36 45% 42%;
   }
 }
 
@@ -121,7 +123,10 @@
     box-shadow: 0 4px 30px hsl(var(--gold) / 0.08);
   }
   .luxury-shadow {
-    box-shadow: 0 8px 40px hsl(220 20% 12% / 0.08);
+    box-shadow: 0 8px 40px hsl(30 10% 15% / 0.08);
+  }
+  .olive-overlay {
+    background: linear-gradient(135deg, hsl(var(--olive) / 0.85), hsl(var(--olive) / 0.7));
   }
 }
 
