@@ -1,21 +1,24 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { hotels } from "@/data/hotels";
-import { Phone, Mail, Instagram, Menu, X, MapPin, ArrowRight } from "lucide-react";
-import ElevatorTransition from "@/components/ElevatorTransition";
-import { useElevatorNavigation } from "@/hooks/useElevatorNavigation";
+import { Phone, Mail, Instagram, Menu, X, MapPin, ArrowRight, ArrowDown } from "lucide-react";
+import ZoomTransition from "@/components/ZoomTransition";
+import { useZoomNavigation } from "@/hooks/useZoomNavigation";
 
 const Index = () => {
-  const { isTransitioning, navigateWithElevator, handleTransitionComplete } = useElevatorNavigation();
+  const { isTransitioning, navigateWithZoom, handleTransitionComplete } = useZoomNavigation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [introComplete, setIntroComplete] = useState(false);
 
+  const scrollToProperties = () => {
+    document.getElementById("properties")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      {/* Elevator Transition */}
-      <ElevatorTransition isActive={isTransitioning} onComplete={handleTransitionComplete} />
+      <ZoomTransition isActive={isTransitioning} onComplete={handleTransitionComplete} />
 
-      {/* Intro Animation — white circle zoom */}
+      {/* Intro Animation */}
       <AnimatePresence>
         {!introComplete && (
           <motion.div
@@ -24,7 +27,6 @@ const Index = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            onAnimationComplete={() => {}}
           >
             <motion.div
               className="rounded-full"
@@ -58,12 +60,11 @@ const Index = () => {
             <span className="text-foreground/40 font-light">Co.</span>
           </h1>
 
-          {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-10">
             {hotels.map((h) => (
               <button
                 key={h.id}
-                onClick={() => navigateWithElevator(`/hotel/${h.id}`)}
+                onClick={() => navigateWithZoom(`/hotel/${h.id}`)}
                 className="text-[11px] tracking-[0.2em] uppercase font-body text-foreground/50 hover:text-primary transition-colors duration-300"
               >
                 {h.name}
@@ -88,7 +89,6 @@ const Index = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         <AnimatePresence>
           {menuOpen && (
             <motion.div
@@ -102,7 +102,7 @@ const Index = () => {
                 {hotels.map((h) => (
                   <button
                     key={h.id}
-                    onClick={() => { navigateWithElevator(`/hotel/${h.id}`); setMenuOpen(false); }}
+                    onClick={() => { navigateWithZoom(`/hotel/${h.id}`); setMenuOpen(false); }}
                     className="text-left text-sm tracking-[0.12em] uppercase font-body text-foreground/70 hover:text-primary transition-colors py-3 border-b border-border/50"
                   >
                     {h.name}
@@ -119,34 +119,98 @@ const Index = () => {
         </AnimatePresence>
       </nav>
 
-      {/* Main Content — 3 Hotel Cards */}
-      <main className="min-h-screen flex flex-col items-center justify-center pt-20 pb-24 px-5">
-        {/* Header */}
+      {/* Hero Section — Inspired by reference */}
+      <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+        {/* Subtle grid pattern background */}
+        <div className="absolute inset-0 opacity-[0.04]" style={{
+          backgroundImage: "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+        }} />
+        
+        <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-16 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={introComplete ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1, delay: 0.1 }}
+            className="space-y-6 md:space-y-8"
+          >
+            {/* Accent line + subtitle */}
+            <div className="flex items-center gap-4">
+              <div className="w-10 md:w-16 h-px bg-primary" />
+              <p className="text-[10px] md:text-xs tracking-[0.4em] uppercase font-body text-primary">
+                The Evara Collection
+              </p>
+            </div>
+
+            {/* Main heading */}
+            <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-semibold text-foreground leading-[0.95] tracking-wide">
+              Where <em className="text-gold-gradient font-normal italic">Luxury</em>
+              <br />
+              Meets Legacy
+            </h2>
+
+            {/* Subtext */}
+            <p className="text-sm md:text-base text-muted-foreground/70 font-body leading-relaxed max-w-lg">
+              Three extraordinary hotels, one defining philosophy — every stay is a story written in gold, silence, and pure indulgence.
+            </p>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-start gap-4 pt-4">
+              <button
+                onClick={scrollToProperties}
+                className="group inline-flex items-center justify-center gap-3 bg-foreground text-background px-8 md:px-10 py-4 text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-body hover:bg-primary transition-colors duration-500"
+              >
+                Explore Hotels
+              </button>
+              <button
+                onClick={scrollToProperties}
+                className="group inline-flex items-center gap-3 text-muted-foreground/60 px-4 py-4 text-[10px] md:text-[11px] tracking-[0.2em] uppercase font-body hover:text-primary transition-colors duration-300"
+              >
+                Discover More
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          initial={{ opacity: 0 }}
+          animate={introComplete ? { opacity: 1, y: [0, 8, 0] } : {}}
+          transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+        >
+          <ArrowDown className="w-4 h-4 text-muted-foreground/40" />
+        </motion.div>
+      </section>
+
+      {/* Hotel Cards Section */}
+      <main id="properties" className="py-20 md:py-32 px-5 md:px-12 lg:px-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={introComplete ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-center mb-14 md:mb-20"
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-16 md:mb-24"
         >
-          <p className="text-[9px] tracking-[0.6em] uppercase text-primary/50 font-body mb-3">Discover</p>
-          <h2 className="text-3xl md:text-5xl font-display font-semibold text-foreground tracking-wide">
+          <p className="text-[9px] md:text-[10px] tracking-[0.6em] uppercase text-primary/50 font-body mb-3">Discover</p>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-semibold text-foreground tracking-wide">
             Our Properties
           </h2>
           <div className="gold-divider mt-5" />
         </motion.div>
 
-        {/* Hotel Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14 max-w-6xl w-full mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14 max-w-7xl w-full mx-auto">
           {hotels.map((hotel, index) => (
             <motion.div
               key={hotel.id}
               initial={{ opacity: 0, y: 50 }}
-              animate={introComplete ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.2 + index * 0.15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: index * 0.15 }}
+              viewport={{ once: true }}
               className="group cursor-pointer"
-              onClick={() => navigateWithElevator(`/hotel/${hotel.id}`)}
+              onClick={() => navigateWithZoom(`/hotel/${hotel.id}`)}
             >
-              {/* Image */}
               <div className="relative overflow-hidden">
                 <img
                   src={hotel.cardImage}
@@ -156,7 +220,6 @@ const Index = () => {
                 />
               </div>
 
-              {/* Info below image — redesigned */}
               <div className="mt-6 text-center space-y-2.5">
                 <h3 className="text-lg md:text-xl font-display font-semibold text-foreground tracking-[0.15em] uppercase group-hover:text-primary transition-colors duration-300">
                   {hotel.name}
@@ -177,10 +240,10 @@ const Index = () => {
         </div>
       </main>
 
-      {/* Newsletter / Subscribe Section — Redesigned */}
+      {/* Newsletter Section */}
       <section className="relative overflow-hidden">
-        <div className="bg-secondary/60 border-t border-b border-border">
-          <div className="max-w-4xl mx-auto px-6 py-16 md:py-20 text-center">
+        <div className="border-t border-b border-border" style={{ background: "hsl(var(--olive) / 0.06)" }}>
+          <div className="max-w-4xl mx-auto px-6 py-16 md:py-24 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -219,7 +282,6 @@ const Index = () => {
       <footer className="px-5 md:px-16 py-10 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            {/* Brand */}
             <div className="text-center md:text-left">
               <p className="text-lg font-display font-semibold tracking-[0.15em]">
                 <span className="text-gold-gradient">EVARA</span>{" "}
@@ -230,12 +292,11 @@ const Index = () => {
               </p>
             </div>
 
-            {/* Links */}
-            <div className="flex items-center gap-8">
+            <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
               {hotels.map((h) => (
                 <button
                   key={h.id}
-                  onClick={() => navigateWithElevator(`/hotel/${h.id}`)}
+                  onClick={() => navigateWithZoom(`/hotel/${h.id}`)}
                   className="text-[10px] tracking-[0.15em] uppercase font-body text-muted-foreground hover:text-primary transition-colors duration-300"
                 >
                   {h.name}
@@ -243,7 +304,6 @@ const Index = () => {
               ))}
             </div>
 
-            {/* Social */}
             <div className="flex items-center gap-5">
               <a href="tel:+1234567890" className="text-muted-foreground hover:text-primary transition-colors"><Phone className="w-4 h-4" strokeWidth={1.5} /></a>
               <a href="mailto:info@evaraco.com" className="text-muted-foreground hover:text-primary transition-colors"><Mail className="w-4 h-4" strokeWidth={1.5} /></a>

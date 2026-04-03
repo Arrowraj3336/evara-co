@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { hotels } from "@/data/hotels";
 import { ArrowLeft, Star, MapPin, Menu, X, Waves, Sparkles, UtensilsCrossed, TreePalm, Dumbbell, Wine, Car, Phone, Wifi, ArrowRight, Mail, Instagram, Coffee, Gamepad2, ParkingCircle, Droplets, Scissors } from "lucide-react";
 import constructionImg from "@/assets/construction-coming-soon.png";
-import ElevatorTransition from "@/components/ElevatorTransition";
-import { useElevatorNavigation } from "@/hooks/useElevatorNavigation";
 
 const amenityIcons: Record<string, React.ReactNode> = {
   "Infinity Pool": <Waves className="w-5 h-5" />,
@@ -36,8 +34,7 @@ const amenityIcons: Record<string, React.ReactNode> = {
 
 const HotelPage = () => {
   const { id } = useParams();
-  const { isTransitioning, navigateWithElevator, handleTransitionComplete } = useElevatorNavigation();
-  const navigate = navigateWithElevator;
+  const navigate = useNavigate();
   const hotel = hotels.find((h) => h.id === id);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -52,13 +49,11 @@ const HotelPage = () => {
     );
   }
 
-  // Opening Soon page for Evara Exotica
   const isComingSoon = hotel.id === "evara-exotica";
 
   if (isComingSoon) {
     return (
       <div className="min-h-screen bg-background overflow-x-hidden">
-        <ElevatorTransition isActive={isTransitioning} onComplete={handleTransitionComplete} />
         <nav className="fixed top-0 left-0 right-0 z-50 glass-nav">
           <div className="flex items-center justify-between px-5 md:px-16 py-4">
             <button
@@ -119,8 +114,6 @@ const HotelPage = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      {/* Elevator Transition */}
-      <ElevatorTransition isActive={isTransitioning} onComplete={handleTransitionComplete} />
       <nav className="fixed top-0 left-0 right-0 z-50 glass-nav">
         <div className="flex items-center justify-between px-5 md:px-16 py-4">
           <button
@@ -185,7 +178,7 @@ const HotelPage = () => {
       </nav>
 
       {/* Hero */}
-      <section className="relative h-[70vh] md:h-screen overflow-hidden bg-secondary">
+      <section className="relative h-[60vh] sm:h-[70vh] md:h-screen overflow-hidden bg-secondary">
         <motion.img
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
@@ -209,7 +202,7 @@ const HotelPage = () => {
             <p className="text-muted-foreground text-[10px] tracking-[0.4em] uppercase font-body mb-2">
               {hotel.tagline}
             </p>
-            <h1 className="text-4xl md:text-6xl lg:text-8xl font-display font-semibold tracking-wider text-foreground">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-display font-semibold tracking-wider text-foreground">
               {hotel.name}
             </h1>
             <div className="flex items-center gap-2 mt-4 text-muted-foreground">
@@ -231,7 +224,7 @@ const HotelPage = () => {
           viewport={{ once: true }}
         >
           <p className="text-[10px] tracking-[0.5em] uppercase text-primary/60 font-body mb-4">Welcome to</p>
-          <h2 className="text-3xl md:text-5xl font-display font-semibold text-foreground tracking-wide mb-5">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-display font-semibold text-foreground tracking-wide mb-5">
             {hotel.name}
           </h2>
           <div className="gold-divider mb-7" />
@@ -272,7 +265,7 @@ const HotelPage = () => {
               }`}
             >
               <p className="text-[10px] tracking-[0.4em] uppercase text-primary/50 font-body mb-4">Experience</p>
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-display font-semibold text-foreground tracking-wide mb-4">
+              <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-semibold text-foreground tracking-wide mb-4">
                 {highlight.title}
               </h3>
               <div className="gold-divider-left mb-6" />
@@ -292,7 +285,7 @@ const HotelPage = () => {
       <section className="px-4 md:px-12 lg:px-20 py-16 md:py-24">
         <div className="max-w-7xl mx-auto">
           <p className="text-center text-[10px] tracking-[0.5em] uppercase text-primary/50 font-body mb-4">Gallery</p>
-          <h3 className="text-center text-3xl md:text-4xl font-display font-semibold text-foreground mb-3">
+          <h3 className="text-center text-2xl sm:text-3xl md:text-4xl font-display font-semibold text-foreground mb-3">
             Moments & Emotions
           </h3>
           <div className="gold-divider mb-12" />
@@ -329,13 +322,13 @@ const HotelPage = () => {
             className="text-center mb-14"
           >
             <p className="text-[10px] tracking-[0.5em] uppercase text-primary/50 font-body mb-4">Accommodations</p>
-            <h2 className="text-3xl md:text-5xl font-display font-semibold text-foreground tracking-wide">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-display font-semibold text-foreground tracking-wide">
               Rooms & Suites
             </h2>
             <div className="gold-divider mt-5" />
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
             {hotel.rooms.map((room, i) => (
               <motion.div
                 key={room.name}
@@ -389,13 +382,13 @@ const HotelPage = () => {
             className="text-center mb-14"
           >
             <p className="text-[10px] tracking-[0.5em] uppercase text-primary/50 font-body mb-4">Experience</p>
-            <h2 className="text-3xl md:text-5xl font-display font-semibold text-foreground tracking-wide">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-display font-semibold text-foreground tracking-wide">
               Amenities
             </h2>
             <div className="gold-divider mt-5" />
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
             {hotel.amenities.map((amenity, i) => (
               <motion.div
                 key={amenity}
@@ -408,7 +401,7 @@ const HotelPage = () => {
                 <div className="text-primary/50 group-hover:text-primary transition-colors duration-300">
                   {amenityIcons[amenity] || <Wifi className="w-5 h-5" />}
                 </div>
-                <span className="text-[10px] font-body text-muted-foreground tracking-[0.12em] uppercase group-hover:text-foreground/70 transition-colors duration-300">{amenity}</span>
+                <span className="text-[9px] sm:text-[10px] font-body text-muted-foreground tracking-[0.12em] uppercase group-hover:text-foreground/70 transition-colors duration-300">{amenity}</span>
               </motion.div>
             ))}
           </div>
@@ -425,7 +418,7 @@ const HotelPage = () => {
           className="relative text-center"
         >
           <p className="text-[10px] tracking-[0.5em] uppercase text-primary/50 font-body mb-4">Ready to Experience</p>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-semibold text-foreground mb-5 tracking-wide">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-display font-semibold text-foreground mb-5 tracking-wide">
             {hotel.name}
           </h2>
           <p className="text-muted-foreground font-body mb-10 max-w-md mx-auto text-sm leading-relaxed">
@@ -451,7 +444,7 @@ const HotelPage = () => {
                 {hotel.address}, {hotel.city}
               </p>
             </div>
-            <div className="flex items-center gap-8">
+            <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
               {hotels.map((h) => (
                 <button
                   key={h.id}
